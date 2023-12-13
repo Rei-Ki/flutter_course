@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_course/BLoC/bloc/extract_state.dart';
 import 'package:flutter_course/BLoC_repo_ex/bloc.dart';
 
 import 'repository.dart';
@@ -38,6 +39,10 @@ class _MainState extends State<Main> {
         ),
         body: BlocBuilder<SomeBloc, States>(
           builder: (context, state) {
+            if (state is InitialState) {
+              context.read<SomeBloc>().add(SomeChangeEvent());
+            }
+
             if (state is SomeUpdated) {
               return newMethod(context, state.title);
             }
@@ -53,12 +58,6 @@ class _MainState extends State<Main> {
       child: Column(
         children: [
           Text("$text"),
-          ElevatedButton(
-            onPressed: () {
-              context.read<SomeBloc>().add(SomeChangeEvent());
-            },
-            child: const Text("Start"),
-          ),
         ],
       ),
     );
