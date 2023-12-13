@@ -39,10 +39,6 @@ class _MainState extends State<Main> {
         ),
         body: BlocBuilder<SomeBloc, States>(
           builder: (context, state) {
-            if (state is InitialState) {
-              context.read<SomeBloc>().add(SomeChangeEvent());
-            }
-
             if (state is SomeUpdated) {
               return newMethod(context, state.title);
             }
@@ -58,6 +54,12 @@ class _MainState extends State<Main> {
       child: Column(
         children: [
           Text("$text"),
+          ElevatedButton(
+            onPressed: () {
+              context.read<SomeBloc>().add(SomeChangeEvent());
+            },
+            child: Text("Connect"),
+          )
         ],
       ),
     );

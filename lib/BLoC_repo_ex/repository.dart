@@ -5,7 +5,9 @@ class AppIdeasRepository {
 
   Stream<int> getData() async* {
     while (true) {
-      yield random.nextInt(100) + 1;
+      int a = random.nextInt(100) + 1;
+      print(a);
+      yield a;
       await Future<void>.delayed(const Duration(seconds: 2));
     }
   }

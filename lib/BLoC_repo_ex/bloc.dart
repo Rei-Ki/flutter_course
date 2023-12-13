@@ -1,19 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_course/BLoC_repo_ex/ws.dart';
 
 import 'repository.dart';
 
 class SomeBloc extends Bloc<Events, States> {
-  final AppIdeasRepository repo;
+  late AppIdeasRepository repo;
+  late WebSocketManager socket;
 
-  SomeBloc({required this.repo}) : super(SomeInitial()) {
-    on<SomeChangeEvent>(onSomeChange);
-  }
-
-  onSomeChange(event, emit) async {
-    await emit.forEach(
-      repo.getData(),
-      onData: (int title) => SomeUpdated(title),
-    );
+  SomeBloc({required this.repo, required this.socket}) : super(SomeInitial()) {
+    on<SomeChangeEvent>((event, emit) async {
+      await emit.forEach(
+        repo.getData(),
+        onData: (int title) => SomeUpdated(title),
+      );
+    });
   }
 }
 
